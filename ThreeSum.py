@@ -9,7 +9,7 @@ def threeSumSort(array: list, targetNum: int) -> [list]:
 
     trippletList = []
 
-    # -2 becasue we walways want 3 numbers to be presnt when comparing
+    # -2 becasue we always want 3 numbers to be presnt when comparing
     for x in range(len(array)-2):
 
         # assigning the left and right pointers
