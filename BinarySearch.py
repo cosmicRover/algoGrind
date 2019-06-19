@@ -37,7 +37,7 @@ def binarySearchHelperIterative(array, target, left, right):
         middle = (left + right) // 2
         potentialMatch = array[middle]
 
-        if target is potentialMatch:
+        if target == potentialMatch:
             return middle
         elif target < potentialMatch:
             right = middle - 1
