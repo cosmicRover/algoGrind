@@ -30,7 +30,7 @@ def storedFib(n, table={2: 1, 1: 0}):
 
 # O(n) time | O(1) space
 # use an array, a counter to iterate through the fib values and return the 2nd element
-# edge case is when target is < 0
+# edge case is when target is < 1
 
 def caclFib(target):
 
