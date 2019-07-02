@@ -22,7 +22,7 @@ def threeSumClosest(nums, target):
             
             # advance the left/right pointers otherwise
             if s < target:
-                l += 1
+                l += 1 
             elif s > target:
                 r -= 1
             else: # if none match, the size of array isn't long enough and return the original sum
