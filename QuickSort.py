@@ -1,6 +1,6 @@
 # Problem H 20
 # Solution
-# Time Best: O(nLoh(n)) Worst: )(N^2) | Space O(Log(n))
+# Time Best: O(nLog(n)) Worst: )(N^2) | Space O(Log(n))
 
 def swap(x, y, array):
     array[x], array[y] = array[y], array[x]
