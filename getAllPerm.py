@@ -1,4 +1,4 @@
-# Problem
+# Problem M 18
 # Solutions
 
 # constructing new array method
