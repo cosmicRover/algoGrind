@@ -1,6 +1,6 @@
 # swapping array elements without a temp value in python using two pointers
 # works on all types of values.
-# Time O(n) | O(1) Space
+# Time O(n) | O(1) Space (i think)
 
 
 def inPlaceSwap(list:list) -> list:
