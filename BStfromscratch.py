@@ -23,9 +23,6 @@ class BST:
         else:
             self._insertANode(self.root, value)
 
-    def find(self, value):
-        return self._findANode(value)
-
     def getMin(self, value):
         return self._getTheMinNode(self.root, value)
 
@@ -60,31 +57,33 @@ class BST:
             print(str(node.value))
             self._printTree(node.right)
 
-    # problem finding anything else but the root
-    def _findANode(self, value):
+    def find(self, value):
+        
+        if self.root != None:
+            return self._findANode(self.root, value)
 
-        currentNode = self.root
+    def _findANode(self, node, value):
 
-        while currentNode != None:
+        if node is None:
+            return False
+        elif value == node.value:
+            return True
+        elif value > node.value:
+            return self._findANode(node.right, value)
+        elif value <= node.value:
+            return self._findANode(node.left, value)
 
-            if currentNode.value == value:
-                return True
-            elif currentNode.value <= value:
-                currentNode = currentNode.left
-            elif currentNode.value > value:
-                currentNode = currentNode.right
 
-        return False
 
 
 bst = BST()
 array = [4, 2, 77, 8, 12, 44]
 
-bst.insert(5)
-bst.insert(2)
-bst.insert(19)
+for x in array:
+    bst.insert(x)
+
 bst.printTree()
-print(bst.find(19))
+print(bst.find(44))
 
 
 
