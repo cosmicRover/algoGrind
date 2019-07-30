@@ -92,14 +92,18 @@ class SinglyLinkedList(object):
             previousNode.nextNode.nextNode = tempNode # set prev's next's next to the tempNode we created before
         return dummyNode.nextNode # return the headNode if necessary
 
+    #reconnects the nextPointers to get rid of node
+    def removeANode(self, nodeToRemove):
 
+        currentNode = self.head
 
+        while currentNode.nextNode:
+            if currentNode.nextNode.data == nodeToRemove:
+                print("found the node")
 
+                currentNode.nextNode = currentNode.nextNode.nextNode
 
-
-
-
-
+            currentNode = currentNode.nextNode
 
 
 
@@ -110,6 +114,8 @@ for x in array:
     LL.appendANode(x)
 
 print(LL.getAllNodes())
-LL.reverseSinglyLinkedListFromMtoN(LL.head, 4, 8)
+#LL.reverseSinglyLinkedListFromMtoN(LL.head, 4, 8)
+#print(LL.getAllNodes())
+LL.removeANode(10)
 print(LL.getAllNodes())
 
