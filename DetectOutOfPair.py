@@ -1,6 +1,7 @@
 #Given an array nums of length n. All elements appear in pairs except one of them. Find this single element that appears alone.
 #Pairs of the same element cannot be adjacent:
 
+# Time O(n) | Space O(1) can do better using binary search O(log(n))
 def findOutOfPair(pairArray):
 
     pointer = 1
