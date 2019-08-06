@@ -51,6 +51,7 @@ class BST:
         if self.root != None:
             self._printTree(self.root)
 
+    # goes to the left most node first..
     def _printTree(self, node):
         if node != None:
             self._printTree(node.left)
@@ -74,15 +75,51 @@ class BST:
             return self._findANode(node.left, value)
 
     
-    # dfs 
+    # dfs implementation
+    # it prioritizes goingf deeper inside a tree first
+    def dfs(self, root, array):
+        stack = [root]
+        array.append(root.value)
+        while len(stack) > 0:
+            node = stack.pop()
+            if node.left:
+                stack.append(node.left)
+                array.append(node.left.value)
+            if node.right:
+                stack.append(node.right)
+                array.append(node.right.value)
+        return array
+
+    def bfs(self, root, array):
+        queue = [root]
+
+        while len(queue) > 0:
+            node= queue.pop(0)
+            array.append(node.value)
+            if node.left:
+                queue.append(node.left)
+            if node.right:
+                queue.append(node.right)
+        return array
+
+
+
+
+
 
 
 
 bst = BST()
-array = [4, 2, 77, 8, 12, 44]
+array = [4, 2, 1, 77, 8, 12, 44, -3, -44, -99]
 
 for x in array:
     bst.insert(x)
 
 bst.printTree()
-print(bst.find(44))
+print(bst.find(2))
+
+array1 = bst.dfs(bst.root, [])
+array2 = bst.bfs(bst.root, [])
+
+print("DFS solution -> %s " %array1)
+print("BFS solution -> %s " %array2)

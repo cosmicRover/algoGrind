@@ -75,7 +75,6 @@ class BST:
 
 
 
-
 bst = BST()
 array = [4, 2, 77, 8, 12, 44]
 
