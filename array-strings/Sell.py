@@ -15,7 +15,7 @@ class Solution:
         # traversing backwards
         for i in range(length-1, -1, -1):
 
-            # temp holds themax
+            # temp holds the max
             temp = max(temp, prices[i])
 
             # if max - current price > res,
