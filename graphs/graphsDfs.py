@@ -69,6 +69,8 @@ class AdjGraph:
         dfsStack.append(currentVertex.name)
 
         for v in currentVertex.neighborNodes:
+            # if self.vertices[v].name in dfsStack:
+            #     print('found cycle')
             if self.vertices[v].visited == 'false':
                 self._dfs(self.vertices[v], dfsStack)
 
@@ -86,13 +88,13 @@ class AdjGraph:
 
 graph = AdjGraph()
 
-vertices = ['A', 'B', 'C', 'D', 'E', 'F', 'G']
+vertices = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H']
 
 # adding the graph vertices
 for vertex in vertices:
     graph.addAVertex(Vertex(vertex))
 
-edges = ['AB', 'BC', 'CD', 'EF', 'GA', 'BG', 'DE']
+edges = ['AB', 'BC', 'CD', 'DE', 'EF', 'FG', 'GD', 'GH']
 
 # adding the edge pairs to the existing vertices
 for edge in edges:
@@ -100,6 +102,6 @@ for edge in edges:
 
 # performing dfs on every node
 # for vertex in vertices:
-graph.dfsRecursive(Vertex('G'))
+graph.dfsRecursive(Vertex('A'))
 
 graph.printTheGraph()
