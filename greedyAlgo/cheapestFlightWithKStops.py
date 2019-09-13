@@ -1,5 +1,3 @@
-from collections import defaultdict
-import heapq
 
 from collections import defaultdict
 import heapq
@@ -9,7 +7,7 @@ class Solution:
     def findCheapestPrice(self, n, flights, src, dst, k):
 
         #init adjDict to hold the parent - child vertex with weight
-        adjDict = collections.defaultdict(dict)
+        adjDict = defaultdict(dict)
 
         #populate the adjDict from the flights, with start, end as keys
         for parent, child, weight in flights:
