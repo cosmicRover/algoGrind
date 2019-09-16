@@ -1,5 +1,7 @@
 # Practicing me some of the all powerful Dijkstra
 # find the cheapest path to one node to it's destination node
+# Time O((Edges + Vertices) log(Vertices)) with the binary heap
+# Space O(V^2E + E)??
 
 # import some collections + prirority queue heapq modules for less boiler plate
 from collections import defaultdict
