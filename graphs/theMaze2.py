@@ -30,7 +30,7 @@ class Maze:
             
             for i, j in directions:
                 
-                #init nnew x and y with prev x, y and distance of 0
+                #init nnew x and y with prev x, y and distance of 0#
                 newX, newY, d = x, y, 0
                 
                 #roll the ball till we hit a 1 and increase the distannce while doing so

@@ -1,5 +1,9 @@
 {
+<<<<<<< HEAD
     "python.pythonPath": "/usr/bin/python3",
+=======
+    "python.pythonPath": "/bin/python3",
+>>>>>>> 65784a03b766e58105586e9dc8d38377223f8d44
     "files.autoSave": "afterDelay",
     "files.autoSaveDelay": 1,
     "python.linting.pylintEnabled": true,

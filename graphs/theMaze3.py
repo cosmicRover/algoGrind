@@ -13,7 +13,10 @@ class Solution:
         #the directions the ball could travel through as envisioned on a graph represented as tuples
         #direction rotated to the right 90 degress
         directions = ((-1, 0, "u"), (1, 0, "d"), (0, 1, "r"), (0, -1, "l"))
+<<<<<<< HEAD
         directionsTaken = ""
+=======
+>>>>>>> 65784a03b766e58105586e9dc8d38377223f8d44
         visited = set() #keeps track of the visited nodes
         
         #loop through the queue
