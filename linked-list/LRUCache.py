@@ -25,7 +25,7 @@ class LRUCache:
         self.head.next = self.tail
         self.tail.prev = self.head
 
-    # if key exixts, "remove" it from dict and return the value, else -1
+    # if key exixts, "remove" it's links and add to head, else -1
     def get(self, key):
         if key in self.dic:
             n = self.dic[key]
@@ -59,6 +59,7 @@ class LRUCache:
         n.prev = p
 
     # add just before tail node
+    # when it comes to eviction, remove the node just after head
     def _add(self, node):
         p = self.tail.prev
         p.next = node
