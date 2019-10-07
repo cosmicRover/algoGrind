@@ -1,3 +1,5 @@
+#leetcode trie insert and search
+
 # An example of Trie implementation
 # It takes into account the english alphabets as input
 
@@ -33,10 +35,10 @@ class Trie:
         # a for loop through the length of key
         for level in range(length):
 
-            # get the index of the char
+            # get the index of the chars
             index = self._charToIndex(key[level])
 
-            # if current node isn't present, init a new branch of TriNode()
+            # if current node isn't present, init a new branch of TriNode() on a child branch
             if not prefixCrawl.children[index]:
                 prefixCrawl.children[index] = self.getNode()
             #set prefixCraw to the next node on the tree
@@ -62,6 +64,20 @@ class Trie:
         return prefixCrawl != None and prefixCrawl.isEndOfWord
 
 
+    #looking for chars in the tree that match the key
+    #exactly the same as search but we only check for prefixCrawl != None
+    def startsWith(self, key):
+        prefixCrawl = self.root
+        length = len(key)
+
+        for level in range(length):
+            index = self._charToIndex(key[level])
+
+            if not prefixCrawl.children[index]:
+                return False
+            prefixCrawl = prefixCrawl.children[index]
+
+        return prefixCrawl != None
 
   
 # Input keys (use only 'a' through 'z' and lower case) 
@@ -80,6 +96,7 @@ for key in keys:
 # Search for different keys 
 print("{} ---- {}".format("the",output[t.search("the")])) 
 print("{} ---- {}".format("these",output[t.search("these")])) 
-print("{} ---- {}".format("their",output[t.search("their")])) 
-print("{} ---- {}".format("thaw",output[t.search("thaw")])) 
+
+print("{} ---- {}".format("an startWith",output[t.startsWith("an")])) 
+
   
