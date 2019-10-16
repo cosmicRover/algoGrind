@@ -39,6 +39,7 @@ class WordFilter:
     def __init__(self, words: [str]):
         self.trie = Trie()
         i, n = 0, len(words)
+        # loop to insert the words into the trie with their all possible pref/suf combo
         while i < n:
             l = len(words[i])
             for j in range(l + 1):
