@@ -1,67 +1,57 @@
 # Segment tree is a DS that hleps with doing calcualtions in logarithmic times
-# However it is somewhat difficult implement and needs to be tested throughly
-# In this file fo example, sumRange has difficulties getting sum of range (0, 2)
-# recommend using Binary Indexed Tree as it is more space efficient and easier to implement
+# import math
 
-class Solutions:
-    def __init__(self, inputArr:[int]):
-        self.arr = inputArr
-        self.size = len(self.arr)
-        self.tree = [0] * (self.size * 2) # init a tree of size 2 * len(original_input)
+class SegmentTree:
+    def __init__(self, values:[int]):
+        self.tree = [0 for _ in values] + values
+        self.treeSize = len(values)
+        self.buildTree()
 
-    def segTree(self):
-        if len(self.arr) > 0:
-            self.buildSegTree()
+    #builds the segment tree
+    def buildTree(self):
+        #going through it reversed range 1 to treeSize
+        for index in reversed(range(1, self.treeSize)):
+            self.tree[index] = self.tree[2*index] + self.tree[2*index+1]
 
-    #builds a segment tree from the given input
-    def buildSegTree(self):
-        #init i to size and j to 0
-        i = self.size
-        j = 0
+    #updates an element from the original input array
+    def update(self, index, value):
+        #prep the index to be on par with the tree sixe
+        index += self.treeSize
+        self.tree[index] = value
+        
+        #update the sum on tree
+        while index > 1:
+            index >>= 1 # right shift 1 is the same as right//2
+            self.tree[index] = self.tree[2*index] + self.tree[2*index+1]
 
-        #while i < 2*original_arr_size and j is not len(original_input), increment both
-        # this loop sets the original array elements as the leaf nodes
-        while i < 2*self.size and j != self.size:
-            self.tree[i] = self.arr[j]
-            i += 1
-            j += 1
-        print(self.tree)
-
-        # this loop bilds the sum from the leaf nodes, looping backwards
-        i = self.size - 1
-        while i > 0:
-            self.tree[i] = self.tree[i * 2] + self.tree[i * 2 + 1] # adding the elements
-            i -= 1
-            
-        print(self.tree)
-
-    # bug in this func. doesn't sum all the ranges properly
-    def sumRange(self, left, right):
-
-        # self.tree.pop(0)
-
-        left += self.size
-        right += self.size
+    #returns the precomputed sum of a given range
+    def getSum(self, left, right) -> int:
+        #bring the left and right sum upto par with the tree
+        left += self.treeSize
+        right += self.treeSize
         sum = 0
 
+        # two pointer loop. if left mod has leftover 1, add to the sum and inc by 1
         while left <= right:
             if left % 2 == 1:
-                print("left --->", left)
-                sum += self.tree[int(left)]
+                sum += self.tree[left]
                 left += 1
+            left >>= 1 # same as left = math.floor(left/2) 0r 5//2 -> 2
 
+            #if right mod has no leftover, add to sum table and dec by 1
             if right % 2 == 0:
-                print("right --->", right)
-                sum += self.tree[int(right)]
+                sum += self.tree[right]
                 right -= 1
-
-            left /= 2
-            right /= 2
-
-        print(sum)
+            right >>= 1
+        
+        return sum
 
 
-inputArr = [1, 2, 3, 4]
-s= Solutions(inputArr)
-s.segTree()
-s.sumRange(0, 2)
+if __name__ == '__main__':
+    arr = [1, 2, 3, 4]
+    st = SegmentTree(arr)
+    print(st.tree)
+    print(st.getSum(0,2))
+    st.update(2, 5)
+    print(st.tree)
+    print(st.getSum(0, 2))
