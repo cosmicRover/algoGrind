@@ -14,8 +14,7 @@ class Solution(object):
 
             for column in range(1, m):
 
-                table[row][column] = table[row-1][column] + \
-                    table[row][column - 1]
+                table[row][column] = table[row-1][column] + table[row][column - 1]
 
         print(table)
 
