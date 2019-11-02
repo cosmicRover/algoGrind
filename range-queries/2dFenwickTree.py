@@ -1,38 +1,39 @@
 # Fenwick tree can be used to calculate range queries in multiple dimensions.
-# 
 
+class NumMatrix(object):
+    def __init__(self, matrix):
+        if not matrix: return
+        self.M, self.N = len(matrix), len(matrix[0])
+        
+        self.mat  = [[0] * self.N for _ in range(self.M)]
+        self.BIT  = [[0] * (self.N + 1) for _ in range(self.M + 1)]
+        
+        for i in range(self.M):
+            for j in range(self.N):
+                self.update(i, j, matrix[i][j])
 
-class FenwickTree:
-    def __init__(self, arr:[[int]]):
-        self.arr = arr
+    def update(self, row, col, val):
+        diff,  = val - self.mat[row][col]
+        i, self.mat[row][col] = row + 1, val
+        while i <= self.M:
+            j = col + 1
+            while j <= self.N:
+                self.BIT[i][j] += diff
+                j += (j & -j)
+            i += (i & -i)
 
-        # self.ft = [[0 for _ in range(len(self.arr[0]))] for _ in range(len(self.arr))]
-        # print(self.ft)
+    def sumRegion(self, row1, col1, row2, col2):
+        return self.sumCorner(row2, col2)         + \
+               self.sumCorner(row1 - 1, col1 - 1) - \
+               self.sumCorner(row1 - 1, col2)     - \
+               self.sumCorner(row2, col1 - 1)
 
-        for row in range(len(self.arr[0])):
-            for column in range(len(self.arr)):
-                self.update(row, column, self.arr[row][column])
-
-    def getLSB(self, value):
-        return value & (-value)
-
-    def update(self, x, y, value):
-        x_ = x
-        while x_ < len(self.arr):
-            x_ += self.getLSB(x_)
-            y_ = y
-            print("hello")
-            while y_ < len(self.arr[0]):
-                y_ += self.getLSB(y_)
-                self.arr[x_][y_] += value
-                print("hello 2")
-
-
-inputArr = [
-  [3, 0, 1, 4, 2],
-  [5, 6, 3, 2, 1],
-  [1, 2, 0, 1, 5],
-  [4, 1, 0, 1, 7],
-  [1, 0, 3, 0, 5]
-]
-ft = FenwickTree(inputArr)
+    def sumCorner(self, row, col):
+        res, i = 0, row + 1
+        while i:
+            j = col + 1
+            while j:
+                res += self.BIT[i][j]
+                j -= (j & -j)
+            i -= (i & -i)
+        return res
