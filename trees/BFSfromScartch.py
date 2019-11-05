@@ -76,7 +76,7 @@ class BST:
 
     
     # dfs implementation
-    # it prioritizes goingf deeper inside a tree first
+    # it prioritizes going deeper inside a tree first
     def dfs(self, root, array):
         stack = [root]
         array.append(root.value)
