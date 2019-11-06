@@ -1,56 +1,42 @@
-# Problem M1
-# Solution
+#this solution is very space efficient while time complexity is very poor
 
-# O(N^2) time becasue of two loops| O(N) space because of trippletList
-
-
-def threeSumSort(array: list, targetNum: int) -> [list]:
-    array.sort()  # sort the arrayt first to prepare for in place comparison
-
-    trippletList = []
-
-    # -2 becasue we always want 3 numbers to be presnt when comparing
-    for x in range(len(array)-2):
-
-        # assigning the left and right pointers
-        leftPointer = x + 1
-        rightPointer = len(array) - 1
-
-        # making sure the pointers dont overlap with the while loop
-        while leftPointer < rightPointer:
-            # assigning the currentNum to be compared and the currentSum to look
-            currentNum = array[x]
-            currentSum = currentNum + array[leftPointer] + array[rightPointer]
-
-            # if they are eual, append to list and inc/dec the pointers
-            if currentSum == targetNum:
-                trippletList.append(
-                    [currentNum, array[leftPointer], array[rightPointer]])
-                leftPointer += 1
-                rightPointer -= 1
-
-            # if less, increment left
-            elif currentSum < targetNum:
-                leftPointer += 1
-
-            # if more, decrement right
-            elif currentSum > targetNum:
-                rightPointer -= 1
-
-    # return the array at the end
-    return trippletList
-
-
-# test case
-def test_threeSumSort():
-    test_case = [12, 3, 1, 2, -6, 5, -8, 6]
-    test_case_solution = [[-8, 2, 6], [-8, 3, 5], [-6, 1, 5]]
-    target = 0
-
-    assert threeSumSort(
-        test_case, target) == test_case_solution, "should be [[-8, 2, 6], [-8, 3, 5], [-6, 1, 5]]"
-
-
-if __name__ == "__main__":
-    test_threeSumSort()  # if test doesn't throw, print the next line
-    print("test passed")
+class Solution:
+    def threeSum(self, nums: [int]) -> [[int]]:
+        
+        nums.sort()
+        tups = set() # removes duplicates
+        
+        for index in range(len(nums) - 2): #-2 because we are looking for 2 accompanying num
+            
+            left = index + 1
+            right = len(nums) - 1
+            
+            while left < right:
+                current = nums[index]
+                leftNum = nums[left]
+                rightNum = nums[right]
+                
+                if current + leftNum + rightNum < 0:
+                    left += 1
+                
+                if current + leftNum + rightNum > 0:
+                    right -= 1
+                    
+                if current + leftNum + rightNum == 0:
+                    tups.add(tuple([current, leftNum, rightNum]))
+                    
+                    #gotta check for duplicates and keep incrementing left/right till we hit an unique value
+                    while left < right and leftNum == nums[left + 1]:
+                        left += 1
+                
+                    while left <right and rightNum == nums[right -1]:
+                        right -= 1
+                    
+                    #after we know the next num is unique, we inc/dec normally
+                    left += 1
+                    right -= 1
+                    
+        
+        tups = list(tups) # convert to a list
+        
+        return tups[::-1] # return reversed
