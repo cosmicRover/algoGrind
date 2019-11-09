@@ -1,3 +1,5 @@
+#This is for binary trees
+
 # Definition for a binary tree node.
 # class TreeNode(object):
 #     def __init__(self, x):
@@ -33,12 +35,31 @@ class Solution(object):
         return array
     
     
+ #This is for graphs
+
+"""
+# Definition for a Node.
+class Node:
+    def __init__(self, val, children):
+        self.val = val
+        self.children = children
+"""
+
+# A preorder traversal is when you visit the left most braches throughly before moving to the right branches.
+# But first, you must visit the root
+class Solution:
     
-        
-    # def order(self, root, array):
-    #     while root:
-    #         array.append(root.val)
-    #         self.order(root.left, array)
-    #         self.order(root.right, array)
-    #     return array
-        
+    def preorder(self, root: 'Node') -> List[int]:
+        stack = [root]
+        rArr = []
+    
+        while stack:
+            
+            node = stack.pop()
+            
+            if node != None:
+                rArr.append(node.val)
+                for x in reversed(node.children): # reversed, otherwise it vists the right side first
+                    stack.append(x)
+                
+        return rArr
