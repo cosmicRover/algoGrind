@@ -1,50 +1,59 @@
-# Problem H 20
-# Solution
-# Time Best: O(nLog(n)) Worst: )(N^2) | Space O(Log(n))
+'''
+QuickSort implementation
+The key strategy is to use a pivot point at the start of an array and use a left/right pointer to compare 
+values with the pivot point, then inc/dec the left/right. In the end of the loop swap pivot with the right 
+and call the function recursively on the smaller subArray first.
 
-def swap(x, y, array):
-    array[x], array[y] = array[y], array[x]
+Time: Best case O(n), Worst O(n^2), Avg O(n log n)
+Space: O(log(n))
+'''
 
 def quickSort(array):
-    quickSortHelper(array, 0, len(array) -1)
+    sort(array, 0, len(array) - 1)
     return array
 
-def quickSortHelper(array, startPointer, endPointer):
-    # base case 
-    if startPointer >= endPointer:
+def sort(array, startIdx, endIdx):
+    # base case where the length is 1, we just return
+    if startIdx >= endIdx:
         return
 
-    # declare pivot, left and right pointers
-    pivotPointer = startPointer
-    leftPointer = startPointer + 1
-    rightPointer = endPointer
+    #init pivot, left and right
+    pivot = startIdx
+    left = pivot + 1
+    right = endIdx
 
-    # loop based on left and right pointers
-    while rightPointer >= leftPointer:
-        # if left > pivot and right < pivot swap left and right pointer values
-        if array[leftPointer] > array[pivotPointer] and array[rightPointer] < array[pivotPointer]:
-            swap(leftPointer, rightPointer, array)
-        
-        # if left <= pivot, increase left 
-        if array[leftPointer] <= array[pivotPointer]:
-            leftPointer += 1
-        
-        # if right >= pivot, decrease right
-        if array[rightPointer] >= array[pivotPointer]:
-            rightPointer -= 1
+    #the comparison loop
+    while left <= right:
+
+        if array[left] > array[pivot] and array[right] < array[pivot]:
+            swap(array, left, right)
+
+        if array[left] <= array[pivot] and array[right] < array[pivot]:
+            left += 1
+
+        if array[right] >= array[pivot]:
+            right -= 1
+
+    #swap pivot with right at the end of the loop, 
+    swap(array, pivot, right)
     
-    # swap pivot with right when the loop ends
-    swap(pivotPointer, rightPointer, array)
+    #then call sort recursively on smaller sub-array first, then larger
+    val = isLeftSubSmaller(right, startIdx, endIdx)
+    if val:
+        sort(array, startIdx, right - 1)
+        sort(array, right + 1, endIdx)
+    else:
+        sort(array, right + 1, endIdx)
+        sort(array, startIdx, right - 1)
+    
 
-    # bool test to see which of the subarrays are smaller
-    leftSubArrayIsSmaller = rightPointer - 1 - startPointer < endPointer - (rightPointer + 1)
+def swap(array, i, j):
+    array[i], array[j] = array[j], array[i]
 
-    # if left is smaller than right sub, perform quicksort on left sub first
-    # then perform quicksort on right sub
-    # left takes start and right -1, while right takes right + 1 and end pointer
-    if leftSubArrayIsSmaller:
-        quickSortHelper(array, startPointer, rightPointer - 1)
-        quickSortHelper(array, rightPointer + 1, endPointer)
-    else: # flip it on else case
-        quickSortHelper(array, rightPointer + 1, endPointer)
-        quickSortHelper(array, startPointer, rightPointer - 1)
+def isLeftSubSmaller(right, startIdx, endIdx):
+    #               left                <         right
+    return True if right - 1 - startIdx < endIdx - (right + 1) else False
+
+
+inputArr = [8, 5, 2, 9, 5, 6, 3]
+print(quickSort(inputArr))
