@@ -60,9 +60,12 @@ The second aproach where the space is reduced to O(n)
 
 def mergeSort(array):
     if len(array) == 1: return array
+    
+    #make a copy of the array
     aux_array = array[:]
     
     mergeSortHelper(array, 0, len(array) -1, aux_array)
+    
     return array
 
 
@@ -70,32 +73,41 @@ def mergeSortHelper(main_array, start, end, aux_array):
     if start == end:
         return 
 
-    #get middle and the call helper function on the two half
-    #while passing aux as the main array
+    #get middle and call this func recursively on the both halves
+    #but replace the aux array with the main array in the call
     middle = (start + end) >> 1
 
     mergeSortHelper(aux_array, start, middle, main_array)
     mergeSortHelper(aux_array, middle + 1, end, main_array)
 
+    #call do merge with normal main/aux positions
     doMerge(main_array, start, middle, end, aux_array)
 
+#this func merges the two halves together
 def doMerge(main_array, start, middle, end, aux_array):
+    #init pointers for the three points of interests
     current_pointer = start
     left_pointer = start
     right_pointer = middle + 1
 
+    #merge loop
     while left_pointer <= middle and right_pointer <= end:
 
+        #if the left value <= right, the current pointer on main array gets it
+        #inc left by 1
         if aux_array[left_pointer] <= aux_array[right_pointer]:
             main_array[current_pointer] = aux_array[left_pointer]
             left_pointer += 1
 
+        #otherwise, current on main becomes right
+        #inc right by 1
         else:
             main_array[current_pointer] = aux_array[right_pointer]
             right_pointer += 1
 
         current_pointer += 1
 
+    #the loop to clear out any left over elemnts on left or right half on aux array
     while left_pointer <= middle:
         main_array[current_pointer] = aux_array[left_pointer]
         left_pointer += 1
