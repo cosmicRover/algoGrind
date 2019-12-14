@@ -3,7 +3,7 @@ class DetecyCycle:
 
         #init ds to hold graph and visited values
         #can reduce the amount of unnecessary space by having # of nodes inputted directly
-        #or validating 
+        #or validating some other way (with sets perhaps)
         graph = [set() for _ in range(len(nums))]
         visited = [0] * len(nums)
 
@@ -22,7 +22,7 @@ class DetecyCycle:
 
             for neighbor in graph[item]:
                 if visited[neighbor] == 1:
-                    print("has cycle")
+                    print("has cycle at node:", neighbor, "redundent connection at node:", item)
                     return True
                 queue.append(neighbor)
 
