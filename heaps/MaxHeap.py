@@ -1,77 +1,85 @@
 class MaxHeap:
-    def __init__(self, array):
-        print(array)
-        self.heap = [0]
-        self.size = 0
-        self.buildHeap(array)
-        print(self.heap)
+    def __init__(self):
+        self.heap = []
 
-    def buildHeap(self, array):
-        index = len(array) // 2
+    def buildHeap(self):
+        for x in self.heap:
+            self.insert(x)
 
-        self.size = len(array)
-        self.heap += array[:]
+    def getParent(self, index):
+        return index -1 // 2
+    
+    def getLeftChild(self, index):
+        return 2*index+1
+    
+    def getRightChild(self, index):
+        return 2*index+2
 
-        while index > 0:
-            self.siftDown(index)
-            index -= 1
+    def hasParent(self, index):
+        return self.getParent(index) >= 0
+    
+    def hasLeftChild(self, index):
+        return self.getLeftChild(index) < len(self.heap)
+    
+    def hasRightChild(self, index):
+        return self.getRightChild(index) <len(self.heap)
 
-    def siftDown(self, index):
-        while index * 2 <= self.size:
-            child = self.getChild(index)
-            
-            #if current indes's value < child's value, swap.
-            if self.heap[index] < self.heap[child]:
-                temp = self.heap[index]
-                self.heap[index] = self.heap[child]
-                self.heap[child] = temp
-            index += child # jump to child
-
-    def getChild(self, index):
-        if index * 2 + 1 > self.size: return index * 2
-
-        else:
-            if self.heap[index * 2] > self.heap[index * 2 +1]:
-                return index*2
-            else:
-                return index * 2 + 1
-
-    def getMax(self):
-        temp = self.heap[1]
-
-        self.heap[1] = self.heap[self.size]
-        self.heap.pop()
-        self.siftDown(1)
-        print(self.heap)
-        return temp
+    def swap(self, i, j):
+        self.heap[i], self.heap[j] = self.heap[j], self.heap[i]
 
     def insert(self, value):
         self.heap.append(value)
-        self.size += 1
-        self.siftUp(self.size) #expand on the established size
+        self.siftUp(len(self.heap) - 1)
 
     def siftUp(self, index):
-        while index * 2 > 0:
-            #if child > parent
-            if self.heap[index] > self.heap[index // 2]:
-                temp = self.heap[index // 2]
-                self.heap[index // 2] = self.heap[index]
-                self.heap[index] = temp
-            index = (index - 1) // 2
+        size = len(self.heap)
+        while self.hasParent(index) and self.heap[index] > self.heap[self.getParent(index)]:
+            self.swap(index, self.getParent(index))
+            index = self.getParent(index)
+    
+    def popMax(self):
+        if len(self.heap) == 0: return None
 
+        lastIndex = len(self.heap) - 1
+        self.swap(0, lastIndex)
+        root = self.heap.pop()
+        self.siftDown(0)
+        return root
 
+    def siftDown(self, index):
+        while self.hasLeftChild(index):
+            maxChild = self.getMaxChildIndex(index)
+            if maxChild == -1 : 
+                break
+            print("index -->", index, "max child -->>", maxChild)
+            if self.heap[index] < self.heap[maxChild]:
+                self.swap(index, maxChild)
+                index = maxChild
+            else:
+                break
 
+    def getMaxChildIndex(self, index):
+        if self.hasLeftChild(index):
+            left = self.getLeftChild(index)
+            # print("max")
+            if self.hasRightChild(index):
+                right = self.getRightChild(index)
+                if self.heap[left] > self.heap[right]:
+                    return left
+                else:
+                    return right
+        else:
+            return -1
 
+inputArr = [76, 2, 3, 11, -9, 3, 0, 4, 11, 99, 103]
+mh = MaxHeap()
 
+for x in inputArr:
+    mh.insert(x)
 
-array = [3, 5, 6, 1, 2, -6, 0, 33, 65, 98, -99, 0, 88]
-max_heap = MaxHeap(array)
-print(max_heap.getMax())
-print(max_heap.heap)
-print(max_heap.getMax())
-print(max_heap.getMax())
-# max_heap.insert(99)
-# print(max_heap.heap)
-# print(max_heap.getMax())
-# print(max_heap.heap)
-# print(max_heap.getMax())
+print(mh.heap)
+print(mh.popMax())
+# print(mh.popMax())
+# print(mh.popMax())
+# print(mh.popMax())
+print(mh.heap)
