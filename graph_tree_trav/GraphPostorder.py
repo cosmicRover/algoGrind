@@ -10,7 +10,7 @@ class Node:
 # recursive solution from left to right, no need for reversing
 class Solution:
     
-    def postorder(self, root: 'Node') -> List[int]:
+    def postorder(self, root: 'Node') -> [int]:
         rArr = []
         return self._postOrder(rArr, root)
     
