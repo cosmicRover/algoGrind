@@ -47,8 +47,7 @@ class Dijkstra:
                 for value in adjDict[vertex]:
                     if value not in visisted:
                         # while adding to pq, make sure to update the accumulated cost of reaching the vertex
-                        heapq.heappush(
-                            pq, (cost + adjDict[vertex][value], value))
+                        heapq.heappush(pq, (cost + adjDict[vertex][value], value))
 
         return -1  # if none exist
 
