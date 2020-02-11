@@ -1,7 +1,7 @@
 
 from collections import Counter
 class Solution:
-    def findTheCity(self, n: int, edges: List[List[int]], distanceThreshold: int) -> int:
+    def findTheCity(self, n: int, edges: [[int]], distanceThreshold: int) -> int:
         adj = [[float('inf')] * n for _ in range(n)] #nxn matrix
         
         for i in range(n):
