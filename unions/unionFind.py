@@ -2,7 +2,7 @@
 
 
 class Solution:
-    def findRedundantConnection(self, edges: List[List[int]]) -> List[int]:
+    def findRedundantConnection(self, edges: [[int]]) -> [int]:
 
         maxValue = float("-inf")
 
