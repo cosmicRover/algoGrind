@@ -1,41 +1,35 @@
-
-from collections import defaultdict
 import heapq
+import collections
+'''
+Dijkstra solution
+Time O(E + V log V) | Space O(E + V) for the graph
+'''
 
 class Solution:
-
-    def findCheapestPrice(self, n, flights, src, dst, k):
-
-        #init adjDict to hold the parent - child vertex with weight
-        adjDict = defaultdict(dict)
-
-        #populate the adjDict from the flights, with start, end as keys
-        for parent, child, weight in flights:
-            adjDict[parent][child] = weight
-
-        #init the priority queue heap with 3 vals. cost, child(src), k+1 stop. we add one so we can loop at least once
-        pq = [(0, src, k+1)]
-        seen = set()  # keep track of the visited nodes so we dont visit duplicates
-
+    def findCheapestPrice(self, n: int, flights: [[int]], src: int, dst: int, K: int) -> int:
+	    
+        #setup DS. The leftmost value is used for pq
+        pq = [(0, src, K+1)]; #push starting values to pq + readjust k
+        graph = collections.defaultdict(dict)
+        
+        #populate graph with flights. Use u, v as key index
+        for u, v, w in flights:
+            graph[u][v] = w
+            
+            
+        print(graph)
+        # key0: {key1: value1, key2: value2}
+        #graph[key0] = {key1: value, key2: value}
+        #graph[key1] = value1
+        
+        #traverse with pq
         while pq:
-            #pop from heap
-            cost, child, K = heapq.heappop(pq)
-
-            #add it to the set
-            seen.add(child)
-
-            #if we get to the destination, return cost
-            if child == dst:
-                return cost
-
-            #we push to heap fir the popped path k is > 0
-            if K > 0:
-                # loop through the values for the key
-                for value in adjDict[child]:
-
-                    # if it isn't visited, update the cost with the cost from adjDic and  push to pq
-                    if value not in seen:
-                        heapq.heappush(
-                            pq, (cost + adjDict[child][value], value, K-1))
-
-        return -1
+            cost, start, stops = heapq.heappop(pq)
+            if start == dst: return cost
+            
+            if stops: #if stops > 1
+                for dest in graph[start]:
+                    heapq.heappush(pq, (cost+graph[start][dest], dest, stops-1)) #update cost, dest, K and push to pq
+        
+        else:
+            return -1
