@@ -5,48 +5,61 @@ Time O(V+E) | Space O(n)
 
 class Solution:
     def criticalConnections(self, n: int, connections: List[List[int]]) -> List[List[int]]:
+        #graph DS setup
         self.graph = collections.defaultdict(list)
-        self.time = 0
         
-        for row in connections:
-            s, d = row
+        #undirected graph setup
+        for s, d in connections:
             self.graph[s].append(d)
             self.graph[d].append(s)
             
-        self.bridges = []
-        
-        visited = [False] * n
-        disc = [float("Inf")] * n
+        #bridge DS setup. Time is for lowlink and dicovery
+        self.time = 0
+        visited = set()
         low = [float("Inf")] * n
+        disc = [float("Inf")] * n
         parent = [-1] * n
+        
+        #the bridges that we keep
+        self.results = []
+        
+        #iterate over each node
+        for node in range(n):
+            if node not in visited:
+                self.findBridge(node, low, parent, visited, disc)
             
-        for x in range(n):
-            if visited[x] == False:
-                self.bridgeFinder(x, visited, parent, low, disc)
-                
-        print(self.graph)
-        print(self.bridges)
+        return self.results
         
-        return self.bridges
-        
-        
-    def bridgeFinder(self, u, visited, parent, low, disc):
-        visited[u] = True
-        
-        disc[u] = self.time
-        low[u] = self.time
+    
+    
+    def findBridge(self, node, low, parent, visited, disc):
+        #memoize the given node's time and increment time
+        visited.add(node)
+        low[node] = self.time
+        disc[node] = self.time
         self.time += 1
         
-        for v in self.graph[u]:
-            if visited[v] == False:
-                parent[v] = u
-                self.bridgeFinder(v, visited, parent, low, disc)
+        #find lower cost for each adjacent nodes on the graph
+        for v in self.graph[node]:
+            
+            #memoize for each unvisited v
+            if v not in visited:
+                #memoize parent
+                parent[v] = node
                 
-                low[u] = min(low[u], low[v])
+                #recursive trail for improved time complexity
+                self.findBridge(v, low, parent, visited, disc)
                 
-                if low[v] > disc[u]:
-                    print("found a bridge")
-                    self.bridges.append([u, v])
+                #record the minimum lowlink value for the given node
+                low[node] = min(low[v], low[node])
+                
+                '''
+                if lowlink of currently iterating node is more 
+                than discovery of given node, we've found a bridge
+                '''
+                if low[v] > disc[node]:
+                    self.results.append([node, v])
                     
-            elif v != parent[u]:
-                low[u] = min(low[u], disc[v])
+            elif v != parent[node]:
+                low[node] = min(low[node], disc[v])
+                
