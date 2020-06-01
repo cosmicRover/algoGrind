@@ -1,6 +1,16 @@
 # Time O(n) | Space O(min(n, english_letter_count)) since we store no duplicates
 # the space can be at most 26.
 
+'''
+Time O(N) | Space O(N) for table
+Sliding window principile
+'''
+
+'''
+Time O(N) | Space O(N)
+Utilizes the sliding window principle
+'''
+
 class Solution:
     def lengthOfLongestSubstring(self, s: str) -> int:
         
