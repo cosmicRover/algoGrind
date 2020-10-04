@@ -1,3 +1,46 @@
+'''
+Binary search on a sorted rotated array using left mid right target comparison.
+An alternative to pivot detection algorithm
+Time O(log(n)) | Space O(1)
+'''
+
+class Solution:
+    def search(self, nums: List[int], target: int) -> int:
+        
+        if not nums: return -1
+        
+        left = 0; right = len(nums) - 1;
+        
+        while left <= right:
+            
+            mid = (left+right)//2
+            
+            if nums[mid] == target: return mid
+            
+            if nums[mid] > nums[right]: #left might be sorted
+                
+                #look for target on left
+                if target >= nums[left] and target < nums[mid]:
+                    right = mid - 1
+                else:
+                    left = mid + 1
+                    
+            else: #right might be sorted
+                
+                #look on the right
+                if target > nums[mid] and target <= nums[right]:
+                    left = mid +1
+                else:
+                    right = mid - 1
+                    
+        return -1
+
+
+
+'''
+Pivot detection algorithm
+Time O(log(n)) | Space O(1)
+'''
 class Solution:
     def search(self, nums: List[int], target: int) -> int:
         
