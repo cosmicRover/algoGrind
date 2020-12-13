@@ -9,7 +9,7 @@ class Solution:
         nums.sort()
         min = float("inf")
         
-        for i in range(len(nums)):
+        for i in range(len(nums)-2):
             left = i+1
             right = len(nums)-1
             
